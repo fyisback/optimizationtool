@@ -15,7 +15,7 @@
     "prettier": "prettier --write *.{css,js,json,md}",
     "serve": "npx serve",
     "test": "npm run prettier && npm run eslint",
-    "work": "npm run test && npm run serve"
+    "start": "npm run test && npm run serve"
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
