@@ -171,33 +171,29 @@ function scrubber(string) {
   }
   scrubbed = resultBrands;
   return scrubbed;
-  
 }
 
-function addAbbr(scrubbed){
+function addAbbr(scrubbed) {
   let resultAbbr = scrubbed;
   //console.log(scrubbed);
-  let regex = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@<>#%?=~_|!:,.;]*)([-A-Z0-9+&@<>#%?\/=~_|!:,.;]*)[-A-Z0-9+&@<>#\/%=~_|])/ig;
+  let regex = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@<>#%?=~_|!:,.;]*)([-A-Z0-9+&@<>#%?\/=~_|!:,.;]*)[-A-Z0-9+&@<>#\/%=~_|])/gi;
   let found = resultAbbr.match(regex);
-if(found){
-  console.log(found.length);
+  if (found) {
+    console.log(found.length);
 
-  let foundNew;  
-for(let k=0;k<found.length;k++){
+    let foundNew;
+    for (let k = 0; k < found.length; k++) {
+      found[k] = found[k].toLowerCase();
+      console.log(found[k]);
+      foundNew = found[k].replace("<i>", "");
+      console.log(foundNew);
+      foundNew = foundNew.replace("</i>", "");
 
-  found[k]=found[k].toLowerCase();
-  console.log(found[k])
-  foundNew=found[k].replace("<i>","");
-  console.log(foundNew)
-  foundNew=foundNew.replace("</i>","");
-  
-   resultAbbr=resultAbbr.replace(found[k],foundNew);
-  
- 
-}}
+      resultAbbr = resultAbbr.replace(found[k], foundNew);
+    }
+  }
 
   for (let k in abbr_short) {
-   
     resultAbbr = resultAbbr.replace(
       new RegExp("\\b" + abbr_short[k] + "\\b", "g"),
       "<abbr title='" + abbr_name[k] + "'>" + abbr_short[k] + "</abbr>"
@@ -205,7 +201,6 @@ for(let k=0;k<found.length;k++){
   }
   scrubbed = resultAbbr;
   return scrubbed;
-  
 }
 function regexEscape(string) {
   return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
@@ -248,26 +243,24 @@ function addTargetBlank(string) {
   console.log(internalLinks.match("/<\/?[\w\d]+>/gi;"))
 return internalLinks;
 }*/
-function deleteTagsFromLinks(string){
-  var tagsFromLinks=string;
-  let regex = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@<>#%?=~_|!:,.;]*)([-A-Z0-9+&@<>#%?\/=~_|!:,.;]*)[-A-Z0-9+&@<>#\/%=~_|])/ig;
-let found = tagsFromLinks.match(regex);
-if(found){
-  console.log(found.length);
+function deleteTagsFromLinks(string) {
+  var tagsFromLinks = string;
+  let regex = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@<>#%?=~_|!:,.;]*)([-A-Z0-9+&@<>#%?\/=~_|!:,.;]*)[-A-Z0-9+&@<>#\/%=~_|])/gi;
+  let found = tagsFromLinks.match(regex);
+  if (found) {
+    console.log(found.length);
 
-  let foundNew;  
-for(let k=0;k<found.length;k++){
+    let foundNew;
+    for (let k = 0; k < found.length; k++) {
+      found[k] = found[k].toLowerCase();
+      console.log(found[k]);
+      foundNew = found[k].replace("<i>", "");
+      foundNew = foundNew.replace("</i>", "");
 
-  found[k]=found[k].toLowerCase();
-  console.log(found[k])
-  foundNew=found[k].replace("<i>","");
-  foundNew=foundNew.replace("</i>","");
-  
-   tagsFromLinks=tagsFromLinks.replace(found[k],foundNew);
-  
- 
-}}
-return tagsFromLinks;
+      tagsFromLinks = tagsFromLinks.replace(found[k], foundNew);
+    }
+  }
+  return tagsFromLinks;
 }
 
 function clearBoth() {
@@ -279,12 +272,12 @@ function wordup() {
   var pasteData = CKEDITOR.instances.wordup.getData();
 
   pasteData = scrubber(pasteData);
-  
-  pasteData = addTargetBlank(pasteData);
-  
-  pasteData=deleteTagsFromLinks(pasteData);
 
-  pasteData=addAbbr(pasteData);
+  pasteData = addTargetBlank(pasteData);
+
+  pasteData = deleteTagsFromLinks(pasteData);
+
+  pasteData = addAbbr(pasteData);
   if (
     document.getElementById("domainfilter").checked === true &&
     document.getElementById("domainname").value
@@ -294,7 +287,6 @@ function wordup() {
       document.getElementById("domainname").value
     );
   }
-
 
   if (document.getElementById("markdown").checked === true) {
     pasteData = turndownService.turndown(pasteData);
