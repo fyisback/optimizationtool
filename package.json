@@ -12,9 +12,8 @@
   },
   "scripts": {
     "eslint": "eslint *.js --fix",
-    "prettier": "prettier --write *.{css,js,json,md}",
     "serve": "npx serve",
-    "test": "npm run prettier && npm run eslint",
+    "test": "npm run eslint",
     "start": "npm run test && npm run serve"
   },
   "dependencies": {
